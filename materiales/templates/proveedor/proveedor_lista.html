@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>RFC</td>
+			<td>Dirección</td>
+			<td>Telefono</td>
+			<td>Email</td>
+			<td>Acciones</td>
+		</tr>
+	</thead>
+	<tbody>
+		
+		{% for proveedor in object_list %}
+		<tr>
+			<td>{{ proveedor.nombre }}</td>
+			<td>{{ proveedor.rfc }}</td>
+			<td>{{ proveedor.domicilio }}</td>
+			<td>{{ proveedor.telefono }}</td>
+			<td>{{ proveedor.email }}</td>
+			<td><a href="{% url 'proveedor:proveedor_editar' proveedor.rfc %}" class="btn btn-primary">Editar</a></td>
+			<td><a href="{% url 'proveedor:proveedor_eliminar' proveedor.rfc %}" class="btn btn-danger">Eliminar</a></td>
+		</tr>
+		
+		{% empty %}
+		<h1>No hay registros de clientes</h1>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

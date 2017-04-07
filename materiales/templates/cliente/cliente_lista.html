@@ -1,0 +1,33 @@
+
+{% extends 'base/base.html' %}
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Sexo</td>
+			<td>Dirección</td>
+			<td>Email</td>
+			<td>Fecha de Nacimiento</td>
+			<td>Acciones</td>
+		</tr>
+	</thead>
+	<tbody>
+		
+		{% for cliente in object_list %}
+		<tr>
+			<td>{{ cliente.nombre }}</td>
+			<td>{{ cliente.sexo }}</td>
+			<td>{{ cliente.direccion }}</td>
+			<td>{{ cliente.email }}</td>
+			<td>{{ cliente.fecha_nac }}</td>
+		</tr>
+		
+		{% empty %}
+		<h1>No hay registros de clientes</h1>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

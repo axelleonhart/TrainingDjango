@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			
+			<td>Contrato</td>
+			<td>Monto</td>
+			<td>RFC</td>
+			<td>Fecha</td>
+			<td>Acciones</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% if object_list %}
+		{% for contrato in object_list %}
+		<tr>
+			<td>{{ contrato.id_contrato }}</td>
+			<td>{{ contrato.monto }}</td>
+			<td>{{ contrato.rfc_id }}</td>
+			<td>{{ contrato.fecha }}</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<h1>No hay registros de contratos</h1>
+		{% endif %}
+	</tbody>
+</table>
+
+{% endblock %}
