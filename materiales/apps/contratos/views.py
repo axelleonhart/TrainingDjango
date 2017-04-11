@@ -26,3 +26,14 @@ class ContratoCreate(CreateView):
 		solicitud.fecha = time.strftime("%Y-%m-%d")
 		solicitud.save()
 		return HttpResponseRedirect(self.get_success_url())
+
+class ContratoUpdate(UpdateView):
+	model = Contrato
+	form_class = ContratoForm
+	template_name = 'contrato/contrato_form.html'
+	success_url = reverse_lazy('contrato:contrato_listar')
+
+class ContratoDelete(DeleteView):
+	model = Contrato
+	template_name = 'contrato/contrato_delete.html'
+	success_url = reverse_lazy('contrato:contrato_listar')

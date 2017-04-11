@@ -14,18 +14,20 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% if object_list %}
+		
 		{% for contrato in object_list %}
 		<tr>
 			<td>{{ contrato.id_contrato }}</td>
 			<td>{{ contrato.monto }}</td>
 			<td>{{ contrato.rfc_id }}</td>
 			<td>{{ contrato.fecha }}</td>
+			<td><a href="{% url 'contrato:contrato_editar' contrato.id_contrato %}" class="btn btn-primary">Editar</a></td>
+			<td><a href="{% url 'contrato:contrato_eliminar' contrato.id_contrato %}" class="btn btn-danger">Eliminar</a></td>
 		</tr>
-		{% endfor %}
-		{% else %}
+		
+		{% empty %}
 		<h1>No hay registros de contratos</h1>
-		{% endif %}
+		{% endfor %}
 	</tbody>
 </table>
 
