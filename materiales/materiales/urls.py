@@ -18,7 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^cliente/', include ('apps.clientes.urls', namespace="cliente")),
-    url(r'^proveedor/', include ('apps.proveedores.urls', namespace="proveedor")),
-    url(r'^contrato/', include ('apps.contratos.urls', namespace="contrato")),
+    url(r'^cliente/', include('apps.clientes.urls', namespace="cliente")),
+    url(r'^proveedor/', include('apps.proveedores.urls',
+        namespace="proveedor")),
+    url(r'^contrato/', include('apps.contratos.urls', namespace="contrato")),
 ]
