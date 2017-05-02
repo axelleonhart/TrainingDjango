@@ -6,11 +6,17 @@ from django.core.urlresolvers import reverse_lazy
 
 
 class ProveedorList(ListView):
+    """
+    Crea una lista con todos los proveedores dados de alta en el modelo
+    """
     model = Proveedor
     template_name = 'proveedor/proveedor_lista.html'
 
 
 class ProveedorUpdate(UpdateView):
+    """
+    Muestra un formulario para la edición de proveedores
+    """
     model = Proveedor
     form_class = ProveedorForm
     template_name = 'proveedor/proveedor_form.html'
@@ -18,6 +24,9 @@ class ProveedorUpdate(UpdateView):
 
 
 class ProveedorCreate(CreateView):
+    """
+    Muestra un formulario para la creación de proveedores
+    """
     model = Proveedor
     form_class = ProveedorForm
     template_name = 'proveedor/proveedor_form.html'
@@ -25,6 +34,9 @@ class ProveedorCreate(CreateView):
 
 
 class ProveedorDelete(DeleteView):
+    """
+    Se le pide al usuario se desea la eliminación de proveedores
+    """
     model = Proveedor
     template_name = 'proveedor/proveedor_delete.html'
     success_url = reverse_lazy('proveedor:proveedor_listar')

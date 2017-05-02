@@ -3,6 +3,9 @@ from apps.contratos.models import Contrato, Proveedor
 
 
 class ContratoForm(forms.ModelForm):
+    """
+    Se declaran los campos y atributos que se mostraran en el formulario
+    """
     rfc = forms.ModelChoiceField(queryset=Proveedor.objects.all(), initial=0)
 
     class Meta:

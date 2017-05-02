@@ -3,7 +3,9 @@ from apps.proveedores.models import Proveedor
 
 
 class ProveedorForm(forms.ModelForm):
-
+    """
+    Se declaran los campos y atributos que se mostraran en el formulario
+    """
     class Meta:
         model = Proveedor
 

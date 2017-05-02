@@ -5,6 +5,9 @@ from apps.proveedores.models import Proveedor
 
 
 class Contrato(models.Model):
+    """
+    Se declara el modelo contrato 
+    """
     id_contrato = models.CharField(max_length=20, primary_key=True)
     monto = models.FloatField()
     rfc = models.ForeignKey(Proveedor, null=False, blank=False,
@@ -16,6 +19,9 @@ class Contrato(models.Model):
 
 
 class Movimiento(models.Model):
+    """
+    Se declara el modelo movimiento 
+    """
     concepto = models.CharField(max_length=20)
     cantidad = models.CharField(max_length=20)
     unidad = models.CharField(max_length=20)

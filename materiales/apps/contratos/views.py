@@ -8,11 +8,17 @@ import time
 
 
 class ContratoList(ListView):
+    """
+    Crea una lista con todos los contratos dados de alta en el modelo
+    """
     model = Contrato
     template_name = 'contrato/contrato_lista.html'
 
 
 class ContratoCreate(CreateView):
+    """
+    Muestra un formulario para la creación de contratos
+    """
     model = Contrato
     form_class = ContratoForm
     template_name = 'contrato/contrato_form.html'
@@ -28,6 +34,9 @@ class ContratoCreate(CreateView):
 
 
 class ContratoUpdate(UpdateView):
+    """
+    Muestra un formulario para la edición de contratos
+    """
     model = Contrato
     form_class = ContratoForm
     template_name = 'contrato/contrato_form.html'
@@ -35,6 +44,9 @@ class ContratoUpdate(UpdateView):
 
 
 class ContratoDelete(DeleteView):
+    """
+    Se le pide al usuario se desea la eliminación de contratos
+    """
     model = Contrato
     template_name = 'contrato/contrato_delete.html'
     success_url = reverse_lazy('contrato:contrato_listar')

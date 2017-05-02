@@ -4,6 +4,9 @@ from django.db import models
 
 
 class Proveedor(models.Model):
+    """
+    Se declara el modelo proveedor 
+    """
     nombre = models.CharField(max_length=50)
     rfc = models.CharField(max_length=15, primary_key=True)
     domicilio = models.CharField(max_length=50)
