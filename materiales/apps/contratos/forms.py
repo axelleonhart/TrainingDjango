@@ -30,3 +30,5 @@ class ContratoForm(forms.ModelForm):
             'monto': forms.TextInput(attrs={'class': 'form-control'}),
             'fecha': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+    

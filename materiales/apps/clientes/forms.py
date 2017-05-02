@@ -1,6 +1,7 @@
 from django import forms
 from apps.clientes.models import Cliente
 from apps.clientes.choices import SEXO_CHOICES
+from django.utils import timezone
 
 
 class ClienteForm(forms.ModelForm):
@@ -35,10 +36,34 @@ class ClienteForm(forms.ModelForm):
             'fecha_nac': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-        #Validamos que el autor no sea menor a 3 caracteres
-        def clean_nombre(self):
-            nombre = self.clean_data.get('nombre', '')
-            num_words = len(nombre.split())
-            if num_words < 4:
-                raise forms.ValidationError("Not enough words!")
-            return nombre
+    
+    def clean_nombre(self):
+        """
+        Valida que el nombre no sea menor a 3 caracteres
+        """
+        nombre_lim = self.cleaned_data
+        nombre = nombre_lim.get('nombre')
+        
+        if len(nombre) < 5:
+            raise forms.ValidationError("Debe de tener un minimo de 5 caracteres")
+        return nombre
+
+    def clean_email(self):
+        """
+        Valida que el correo no esta ya registrado
+        """
+        email = self.cleaned_data['email']
+        if Cliente.objects.filter(email=email).exists():
+            raise forms.ValidationError("El Email ya esta dado de alta")
+        return email
+
+    def clean_direccion(self):
+        """
+        Valida que la dirección no sea menor a 5 caracteres 
+        """
+        direccion = self.cleaned_data['direccion']
+        if len(direccion) < 5:
+            raise forms.ValidationError("Debe de tener un minimo de 5 caracteres")
+        return direccion
+
+    
