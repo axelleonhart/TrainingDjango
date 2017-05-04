@@ -9,28 +9,39 @@ class TestModel(TestCase):
     Prueba unitaria para el modelo
     """
     def setUp(self):
-        Proveedor.objects.create(nombre="drake", rfc="romano", domicilio="barcelona #32", telefono="569382", email="drake@mail.com")
-        Proveedor.objects.create(nombre="sully", rfc="suizo", domicilio="sargoza #43", telefono="930839", email="sully@mail.com")
+        Proveedor.objects.create(nombre="drake",
+                                 rfc="romano",
+                                 domicilio="barcelona #32",
+                                 telefono="569382",
+                                 email="drake@mail.com")
+
+        Proveedor.objects.create(nombre="sully",
+                                 rfc="suizo",
+                                 domicilio="sargoza #43",
+                                 telefono="930839",
+                                 email="sully@mail.com")
 
     def test_proveedores_model(self):
         prove1 = Proveedor.objects.get(rfc="romano")
         prove2 = Proveedor.objects.get(rfc="suizo")
         self.assertEqual(prove1.domicilio, 'barcelona #32')
-        #self.assertEqual(cliente.rfc, salomon.nombre)
+        # self.assertEqual(cliente.rfc, salomon.nombre)
         self.assertEqual(prove2.pk, "suizo")
+
 
 class TestForm(TestCase):
     """
     Prueba unitaria para el form
     """
     def test_form(self):
-        form_data = {'nombre': 'drake',
-                    'rfc': 'romano',
-                    'domicilio': 'barcelona #32',
-                    'telefono': '92837828',
-                    'email': 'drake@mail.com'}
+        form_data = {'nombre': 'drake dominguez',
+                     'rfc': 'romano',
+                     'domicilio': 'barcelona #32',
+                     'telefono': '9283782823',
+                     'email': 'drake@mail.com'}
         form = ProveedorForm(data=form_data)
         self.assertTrue(form.is_valid())
+
 
 class TestView(TestCase):
     """
@@ -46,7 +57,7 @@ class TestView(TestCase):
         response = self.client.get('/proveedor/nuevo/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'proveedor/proveedor_form.html')
-        #self.assertEqual(len(response.context['cliente']), 5)
+        # self.assertEqual(len(response.context['cliente']), 5)
 
     def test_viewsDel(self):
         """
@@ -78,7 +89,37 @@ class TestView(TestCase):
         """
         Prueba agregar un proveedor a la vista nuevo
         """
+
+        response = self.client.post('/proveedor/nuevo/',
+                                    {'nombre': 'arellano',
+                                     'rfc': 'romano',
+                                     'domicilio': 'francia #23',
+                                     'telefono': '1993931245',
+                                     'email': 'arellamp@mail.com'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEquals(response['Location'], '/proveedor/listar/')
+
+    def test_edi_client(self):
+        """
+        Prueba editar un proveedor en la vista editar
+        """
         rfc = Proveedor.objects.create(rfc='Masti89')
-        response = self.client.post('/proveedor/nuevo/', {'nombre': 'arellano', 'rfc': 'romano', 'domicilio': 'francia #23', 'telefono': '199393', 'email': 'arellamp@mail.com'})
+
+        response = self.client.post('/proveedor/editar/'+rfc.rfc+'/',
+                                    {'nombre': 'alberto soriano',
+                                     'rfc': rfc.rfc,
+                                     'domicilio': 'españa suecia',
+                                     'telefono': '1989863459',
+                                     'email': 'alberto@mail.com'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEquals(response['Location'], '/proveedor/listar/')
+
+    def test_del_client(self):
+        """
+        Prueba eliminar un proveedor
+        """
+        rfc = Proveedor.objects.create(rfc='Masti89')
+
+        response = self.client.post('/proveedor/eliminar/'+rfc.rfc+'/')
         self.assertEqual(response.status_code, 302)
         self.assertEquals(response['Location'], '/proveedor/listar/')

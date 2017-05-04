@@ -1,7 +1,7 @@
 from django import forms
 from apps.clientes.models import Cliente
 from apps.clientes.choices import SEXO_CHOICES
-from django.utils import timezone
+import re
 
 
 class ClienteForm(forms.ModelForm):
@@ -12,8 +12,6 @@ class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-
-        
 
         fields = [
             'nombre',
@@ -36,16 +34,19 @@ class ClienteForm(forms.ModelForm):
             'fecha_nac': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    
     def clean_nombre(self):
         """
         Valida que el nombre no sea menor a 3 caracteres
         """
         nombre_lim = self.cleaned_data
         nombre = nombre_lim.get('nombre')
-        
+
         if len(nombre) < 5:
-            raise forms.ValidationError("Debe de tener un minimo de 5 caracteres")
+            raise forms.ValidationError(
+                   "Debe de tener un mínimo de 5 caracteres")
+        elif len(nombre) > 15:
+            raise forms.ValidationError(
+                   "Debe de tener un maxímo de 15 caracteres")
         return nombre
 
     def clean_email(self):
@@ -55,15 +56,20 @@ class ClienteForm(forms.ModelForm):
         email = self.cleaned_data['email']
         if Cliente.objects.filter(email=email).exists():
             raise forms.ValidationError("El Email ya esta dado de alta")
+        if not(re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',
+               email.lower())):
+            raise forms.ValidationError("No es un email correcto")
         return email
 
     def clean_direccion(self):
         """
-        Valida que la dirección no sea menor a 5 caracteres 
+        Valida que la dirección no sea menor a 5 caracteres
         """
         direccion = self.cleaned_data['direccion']
         if len(direccion) < 5:
-            raise forms.ValidationError("Debe de tener un minimo de 5 caracteres")
+            raise forms.ValidationError(
+                  "Debe de tener un mínimo de 5 caracteres")
+        elif len(direccion) > 15:
+            raise forms.ValidationError(
+                  "Debe de tener un maxímo de 5 caracteres")
         return direccion
-
-    
