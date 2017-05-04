@@ -63,8 +63,9 @@ class ProveedorForm(forms.ModelForm):
         Valida que el telefono sea igual a 10 digitos
         """
         telefono = self.cleaned_data['telefono']
-        if len(telefono) == 10:
-            raise forms.ValidationError("Deben de ser 10 numeros")
+        if not(re.match('^\d{10}$',
+               telefono)):
+            raise forms.ValidationError("El telefono debe ser de 10 digitos")
         return telefono
 
     def clean_email(self):
@@ -86,7 +87,10 @@ class ProveedorForm(forms.ModelForm):
         rfc = self.cleaned_data['rfc']
         if Proveedor.objects.filter(rfc=rfc).exists():
             raise forms.ValidationError("El RFC ya esta dado de alta")
-        if not(re.match('^([A-Z&Ññ]{3}|[A-Z][AEIOU][A-Z]{2})\d{2}((01|03|05|07|08|10|12)(0[1-9]|[12]\d|3[01])|02(0[1-9]|[12]\d)|(04|06|09|11)(0[1-9]|[12]\d|30))([A-Z0-9]{2}[0-9A])?$',
+        if not(re.match('^([A-Z&Ññ]{3,4}|[A-Z][AEIOU][A-Z]{2})\d{2}' +
+                        '((01|03|05|07|08|10|12)(0[1-9]|' +
+                        '[12]\d|3[01])|02(0[1-9]|[12]\d)|(04|06|09|11)' +
+                        '(0[1-9]|[12]\d|30))([A-Z0-9]{2}[0-9A])?$',
                rfc.upper())):
             raise forms.ValidationError("No es un RFC correcto")
         return rfc
