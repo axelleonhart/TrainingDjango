@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<form method="post">
+	{% csrf_token %}
+	<h3>Desea eliminar el registro del contrato {{ object.id_contrato }}?</h3>
+	<button class="btn btn-danger" type="submit">Si, eliminar</button>
+	<a href="{% url 'contrato:contrato_listar' %}" class="btn btn-default">Cancelar</a>
+</form>
+{% endblock %}
