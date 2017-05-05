@@ -35,7 +35,7 @@ class TestForm(TestCase):
     """
     def test_form(self):
         form_data = {'nombre': 'drake dominguez',
-                     'rfc': 'romano',
+                     'rfc': 'BAFJ070401AZ2',
                      'domicilio': 'barcelona #32',
                      'telefono': '9283782823',
                      'email': 'drake@mail.com'}
@@ -92,7 +92,7 @@ class TestView(TestCase):
 
         response = self.client.post('/proveedor/nuevo/',
                                     {'nombre': 'arellano',
-                                     'rfc': 'romano',
+                                     'rfc': 'BAFJ070401AZ2',
                                      'domicilio': 'francia #23',
                                      'telefono': '1993931245',
                                      'email': 'arellamp@mail.com'})
@@ -103,11 +103,11 @@ class TestView(TestCase):
         """
         Prueba editar un proveedor en la vista editar
         """
-        rfc = Proveedor.objects.create(rfc='Masti89')
+        rfc = Proveedor.objects.create(rfc='BAFJ070401AZ2')
 
         response = self.client.post('/proveedor/editar/'+rfc.rfc+'/',
-                                    {'nombre': 'alberto soriano',
-                                     'rfc': rfc.rfc,
+                                    {'nombre': 'alberto sorian',
+                                     'rfc': 'BAFJ070401AZ3',
                                      'domicilio': 'españa suecia',
                                      'telefono': '1989863459',
                                      'email': 'alberto@mail.com'})
